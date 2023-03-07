@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TweetApp</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/95f6caf06f.js" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+  <header>
+      <div class="header-logo">
+        <% if @current_user %>
+          <%= link_to("HajimeAichi", "/posts/index") %>
+        <% else %>
+          <%= link_to("HajimeAichi", "/") %>
+        <% end %>
+      </div>
+      <ul class="header-menus">
+        <% if @current_user %>
+          <li>
+            <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+          </li>
+          <!-- ログインしている状態でヘッダーに表示する -->
+          <li>
+            <%= link_to("投稿一覧", "/posts/index") %>
+          </li>
+          <li>
+            <%= link_to("新規投稿", "/posts/new") %>
+          </li>
+          <li>
+            <%= link_to("アカウント", "/users/index") %>
+          </li>
+          <li>
+            <!-- ログアウト用のリンク -->
+            <%= link_to "ログアウト", logout_path, method: :get %>
+          </li>
+        <% else %>
+          <!-- ログインしていない状態でヘッダーに表示する -->
+          <li>
+            <%= link_to("HajimeAichiとは", "/about") %>
+          </li>
+          <li>
+            <%= link_to("新規登録", "/signup") %>
+          </li>
+          <li>
+            <%= link_to("ログイン", "/login") %>
+          </li>
+        <% end %>
+      </ul>
+    </header>
+
+    <% if flash[:notice]%>
+      <div class="flash">
+        <%= flash[:notice]%>
+      </div>
+    <% end %>
+    
+    <%= yield %>
+  </body>
+</html>
